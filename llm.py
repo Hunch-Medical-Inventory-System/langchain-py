@@ -16,7 +16,7 @@ If the medication is not found in the context, return "0".
 
 ### Example:
 **User Input:** "How much Benadril do we have in stock?"
-**Transformed Output:** "2"
+**Transformed Output:** "[2]"
 
 Context: {context}
 
@@ -26,6 +26,8 @@ Assistant:
 
 inventory_prompt_content = """
 Only Answer using the context and data from the database.
+
+Relay all information that relate to each-other.
 
 Use quantity for quantity.
 Use length for amount of packages.
@@ -87,3 +89,8 @@ def get_inventory_information(question: object) -> str:
         "location": supply_row[0]["location"]
     }
     return inventory_chain.invoke({"input": question, "context": context})
+
+if __name__ == "__main__":
+    print(get_inventory_information("How much Benadril do we have in stock?"))
+    print(get_inventory_information("How much Zoloft do I have?"))
+    print(get_inventory_information("How much Advil do I have??"))
